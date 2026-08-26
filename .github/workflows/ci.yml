@@ -89,3 +89,4 @@ jobs:
               -t ghcr.io/${{ github.repository }}--frontend:${{ github.sha }} \
               ./frontend
             docker push ghcr.io/${{ github.repository }}--frontend:${{ github.sha }}
+            
