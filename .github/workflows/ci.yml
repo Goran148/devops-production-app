@@ -106,8 +106,24 @@ jobs:
         - name: Start application
           run: docker compose up -d
 
-        - name: Wait fore services
-          run: sleep 10
+        - name: Wait for database
+          run: |
+            for i in {1..30}; do
+              STATUS=$(docker inspect --format='{{.State.Health.Status}}' devops-database 2>/dev/null || true)
+
+              echo "Database status: $STATUS"
+
+              if [ "$STATUS" = "healthy" ]; then
+                echo "Database is healthy"
+                exit 0
+              fi
+
+              sleep 2
+            done
+
+            echo "Database did not become healthy"
+            docker compose logs database
+            exit 1
 
         - name: Test backend health
           run: curl --fail http://localhost:5000/health
