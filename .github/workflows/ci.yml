@@ -79,16 +79,16 @@ jobs:
         - name: Build and push backend image
           run: |
             docker build \
-              -t ghcr.io/${{ github.repository }}--backend:${{ github.sha }} \
+              -t ghcr.io/${{ github.repository }}-backend:${{ github.sha }} \
               ./backend
-            docker push ghcr.io/${{ github.repository }}--backend:${{ github.sha }}
+            docker push ghcr.io/${{ github.repository }}-backend:${{ github.sha }}
 
         - name: Build and push frontend image
           run: |
             docker build \
-              -t ghcr.io/${{ github.repository }}--frontend:${{ github.sha }} \
+              -t ghcr.io/${{ github.repository }}-frontend:${{ github.sha }} \
               ./frontend
-            docker push ghcr.io/${{ github.repository }}--frontend:${{ github.sha }}
+            docker push ghcr.io/${{ github.repository }}-frontend:${{ github.sha }}
 
     integration:
       name: Integration Test
