@@ -129,7 +129,7 @@ jobs:
           run: curl --fail http://localhost:5000/health
 
         - name: Test database connection
-          run: curl --fail http:/localhost:5000/api/database
+          run: curl --fail http://localhost:5000/api/database
 
         - name: Show containers
           if: always()
