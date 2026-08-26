@@ -117,3 +117,4 @@ jobs:
         - name: Show logs
           if: always()
           run: docker compose logs
+          
