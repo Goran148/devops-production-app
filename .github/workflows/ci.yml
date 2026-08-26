@@ -94,12 +94,17 @@ jobs:
       name: Integration Test
       runs-on: ubuntu-latest
 
+      env:
+        POSTGRES_DB: appdb
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4
 
         - name: Start application
-          run: docker compose up -d || true
+          run: docker compose up -d
 
         - name: Wait fore services
           run: sleep 10
