@@ -53,3 +53,14 @@ jobs:
         - name: Run backend tests
           working-directory: backend
           run: pytest
+
+    docker:
+      name: Docker Build
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Build Docker Image
+          run: docker compose build
