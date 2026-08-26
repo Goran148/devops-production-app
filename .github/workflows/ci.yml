@@ -89,4 +89,31 @@ jobs:
               -t ghcr.io/${{ github.repository }}--frontend:${{ github.sha }} \
               ./frontend
             docker push ghcr.io/${{ github.repository }}--frontend:${{ github.sha }}
-            
+
+    integration:
+      name: Integration Test
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Start application
+          run: docker compose up -d
+
+        - name: Wait fore services
+          run: sleep 10
+
+        - name: Test backend health
+          run: curl --fail http://localhost:5000/health
+
+        - name: Test database connection
+          run: curl --fail http:/localhost:5000/api/database
+
+        - name: Show containers
+          if: always()
+          run: docker compose ps
+
+        - name: Show logs
+          if: always()
+          run: docker compose logs
