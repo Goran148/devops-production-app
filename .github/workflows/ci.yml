@@ -128,7 +128,7 @@ jobs:
         - name: Wait for backend
           run: |
             for i in {1..30}; do
-              if curl --fail http://localhost:5000/health
+              if curl --fail http://localhost:5000/health; then
                 echo "Backend is healthy"
                 exit 0
               fi
