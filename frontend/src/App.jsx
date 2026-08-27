@@ -24,7 +24,7 @@ function App() {
         setApiStatus("unavailable");
       });
 
-    fetch(`${API_URL}/api/database`)
+    fetch(`${API_URL}/database`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Database request failed");
