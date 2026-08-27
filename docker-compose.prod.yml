@@ -5,6 +5,12 @@ services:
     container_name: devops-backend-prod
     ports:
       - "5000:5000"
+    environment:
+      DATABASE_HOST: ${POSTGRES_HOST}
+      DATABASE_PORT: ${POSTGRES_PORT}
+      DATABASE_NAME: ${POSTGRES_DB}
+      DATABASE_USER: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
 
   frontend:
     image: ghcr.io/${GHCR_OWNER}/${IMAGE_NAME}-frontend:${IMAGE_TAG}

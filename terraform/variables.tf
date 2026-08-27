@@ -20,3 +20,21 @@ variable "key_name" {
   description = "Name of the existing AWS EC2 key pair"
   type        = string
 }
+
+variable "db_name" {
+  description = "PostgreSQL database name"
+  type        = string
+  default     = "appdb"
+}
+
+variable "db_username" {
+  description = "PostgreSQL username"
+  type        = string
+  default     = "postgres"
+}
+
+variable "db_password" {
+  description = "PostgreSQL password"
+  type        = string
+  sensitive   = true
+}

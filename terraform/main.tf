@@ -27,6 +27,16 @@ resource "aws_subnet" "public" {
   }
 }
 
+resource "aws_subnet" "database" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.2.0/24"
+  availability_zone = "${var.aws_region}b"
+
+  tags = {
+    Name = "${var.project_name}-database-subnet"
+  }
+}
+
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
@@ -66,22 +76,6 @@ resource "aws_security_group" "app" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    description = "HTTPS"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "Frontend"
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -106,7 +100,7 @@ resource "aws_instance" "app" {
   key_name               = var.key_name
 
   user_data = <<-EOF
-  #!bin/bash
+  #!/bin/bash
 
   apt-get update
   apt-get install -y ca-certificates curl
