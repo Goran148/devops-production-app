@@ -11,9 +11,17 @@ services:
       DATABASE_NAME: ${POSTGRES_DB}
       DATABASE_USER: ${POSTGRES_USER}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - app-network
 
   frontend:
     image: ghcr.io/${GHCR_OWNER}/${IMAGE_NAME}-frontend:${IMAGE_TAG}
     container_name: devops-frontend-prod
     ports:
       - "80:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
