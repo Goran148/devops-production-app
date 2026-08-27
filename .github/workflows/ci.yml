@@ -125,8 +125,21 @@ jobs:
             docker compose logs database
             exit 1
 
-        - name: Test backend health
-          run: curl --fail http://localhost:5000/health
+        - name: Wait for backend
+          run: |
+            for i in {1..30}; do
+              if curl --fail http://localhost:5000/health
+                echo "Backend is healthy"
+                exit 0
+              fi
+
+              echo "Backend is not ready yet..."
+              sleep 2
+            done
+
+            echo "Backend did not become healthy"
+            docker compose logs backend
+            exit 1
 
         - name: Test database connection
           run: curl --fail http://localhost:5000/api/database
